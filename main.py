@@ -2,14 +2,14 @@ import asyncio
 import logging
 import sys
 
-from aiogram import Bot, Dispatcher, html
+from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
-from aiogram.filters import CommandStart
-from aiogram.types import Message
+
 
 from config import settings
-from app.handlers import router
+from app.handlers.main import router
+from app.handlers.dev import dev_router
 
 # Bot token can be obtained via https://t.me/BotFather
 TOKEN = settings.BOT_TOKEN
@@ -19,9 +19,9 @@ TOKEN = settings.BOT_TOKEN
 dp = Dispatcher()
 
 
-
 async def main() -> None:
     dp.include_router(router)
+    dp.include_router(dev_router)
     # Initialize Bot instance with default bot properties which will be passed to all API calls
     bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 
